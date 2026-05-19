@@ -1,5 +1,5 @@
 const{expect}=require('@playwright/test');
-const { serviceName, category, option1Name, itemName, basePrice } = require('../dataInputs/servicesdata');
+const { serviceName, category, option1Name, itemName, basePrice, inclusions, exclusions} = require('../dataInputs/servicesdata');
 class ServicesPage{
     constructor(page){
         this.page=page; 
@@ -23,7 +23,8 @@ class ServicesPage{
         this.itemNameField=page.getByPlaceholder('e.g. Window, Split Type');
         this.selectUnit_Item=page.getByRole('combobox').first();
         this.basePriceField=page.locator('app-input').filter({ hasText: 'Base Price' }).getByPlaceholder('0.00');
-
+        this.inclusionsField=page.getByRole('textbox', { name: 'One inclusion per line' });
+        this.exclusionsField=page.getByRole('textbox', { name: 'One exclusion per line' });
 
         this.updateServiceButton=page.getByRole('button', { name: ' Update Service ' });
 
@@ -54,6 +55,8 @@ class ServicesPage{
         await this.itemNameField.fill(itemName);
         await this.selectUnit_Item.selectOption('per hour');
         await this.basePriceField.fill(basePrice);
+        await this.inclusionsField.fill(inclusions);
+        await this.exclusionsField.fill(exclusions);
         await this.updateServiceButton.click();
     }
     async verifyServiceUpdate(){
@@ -64,6 +67,8 @@ class ServicesPage{
         await expect(this.option1NameField).toHaveValue(option1Name);
         await expect(this.itemNameField).toHaveValue(itemName);
         await expect(this.basePriceField).toHaveValue(basePrice);
+        await expect(this.inclusionsField).toHaveValue(inclusions);
+        await expect(this.exclusionsField).toHaveValue(exclusions);
     }
 }
 module.exports={ServicesPage};
