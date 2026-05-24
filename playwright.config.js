@@ -1,6 +1,7 @@
 // @ts-check
 require('dotenv').config();
 const { defineConfig, devices } =require('@playwright/test');
+const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
@@ -15,6 +16,7 @@ const { defineConfig, devices } =require('@playwright/test');
  */
 module.exports = defineConfig({
   testDir: './tests',
+  outputDir: `test-results/${timestamp}`,
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -32,6 +34,9 @@ module.exports = defineConfig({
   
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
+    screenshot: 'only-on-failure',
+    video: 'retain-on-failure',
+    
   },
 
   /* Configure projects for major browsers */

@@ -11,6 +11,7 @@ class LoginPage{
         this.welcomeMsg=page.getByRole('heading', { name: ' Welcome Back, Admin!' });
         this.qouteMsg=page.getByText('"Servana is your go-to app for booking trusted cleaners, from quick touch-ups to deep cleans."');
         this.forgotPassword=page.getByText(' Forgot password? ');
+        
     }
     async goto(){
         await this.page.goto(this.loginUrl, { timeout: 60000 });
@@ -20,6 +21,13 @@ class LoginPage{
         await this.passwordInput.fill(this.passwordCreds);
         await this.submitButton.click();    
     }
+    async loginforMultipleUsers(username, password){
+        await this.usernameInput.fill(username);
+        await this.passwordInput.fill(password);
+        await this.submitButton.click();    
+    }
+
+
     async verifyLoginUI(){
         await expect(this.usernameInput).toBeVisible();
         await expect(this.passwordInput).toBeVisible();

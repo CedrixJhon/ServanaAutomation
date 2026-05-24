@@ -1,4 +1,7 @@
 const { test } = require('../fixtures/baseTest');
+
+
+
   // individual test — always async, destructure { page }
   test('Verify Login', async ({loginPage }) => {
     await loginPage.goto();
@@ -19,8 +22,7 @@ const { test } = require('../fixtures/baseTest');
   });
   test('Verify Update Services', async ({gotologin,gotoServicesMenu }) => {
    
-    await gotoServicesMenu.ProceedtoUpdateService();
-    await gotoServicesMenu.verifyServiceUpdate();
+    await gotoServicesMenu.updateandverifyServiceNotOptionsItems();
    
   });
 

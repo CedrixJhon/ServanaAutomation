@@ -1,5 +1,6 @@
 
 # Playwright
+cat > .gitignore << 'EOF'
 node_modules/
 /test-results/
 /playwright-report/
@@ -7,4 +8,5 @@ node_modules/
 /playwright/.cache/
 /playwright/.auth/
 .env
-
+*.zip
+EOF
