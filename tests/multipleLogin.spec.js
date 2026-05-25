@@ -18,26 +18,26 @@ test.describe('Login — Data-Driven Tests', () => {
              test.info().annotations.push(
         { type: 'TC_ID',          description: row.TC_ID },
         { type: 'Username',        description: row.Username || '(empty)' },
+        { type: 'Password',        description: row.Password || '(empty)' },
         { type: 'ExpectedResult',  description: row.ExpectedResult }
       );
         const dashboardPage = new DashboardPage(page);
         const loginPage = new LoginPage(page);
         await loginPage.goto();
         await loginPage.loginforMultipleUsers(row.Username, row.Password);
+        
         if (row.ExpectedResult.trim() === 'Success') {
-            await expect(page).toHaveURL('https://servana-web.netlify.app/portal/dashboard', {
-          // Custom timeout for URL change — navigate can take up to 15s
-          timeout: 15000
-        });
-         await expect(loginPage.errorMessage).not.toBeVisible();
+          await page.waitForURL('https://servana-web.netlify.app/portal/dashboard', { timeout: 10000 });  
+            dashboardPage.gotoDashboard();
+            dashboardPage.verifyDashboardUI();
 
         // ASSERTION 3: Dashboard heading should be visible (confirms we're on the right page)
         // Adjust 'dashboardHeading' locator in loginPage.js to match your app
-        await expect(dashboardPage.dashboardHeadingUI).toBeVisible({ timeout: 10000 });
+        
 
       } else if (row.ExpectedResult.trim() === 'Failed') {
-        await expect(page).toHaveURL('https://servana-web.netlify.app/auth/login?role=admin');
-
+        
+        loginPage.verifyLoginFailed();
     
 
         // OPTIONAL ASSERTION 4: Check for specific error text

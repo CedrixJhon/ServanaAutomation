@@ -27,7 +27,11 @@ class LoginPage{
         await this.submitButton.click();    
     }
 
-
+    async verifyLoginFailed(){
+        await expect(this.page).toHaveURL('https://servana-web.netlify.app/auth/login');
+    }
+    
+    
     async verifyLoginUI(){
         await expect(this.usernameInput).toBeVisible();
         await expect(this.passwordInput).toBeVisible();
